@@ -2,7 +2,7 @@
 
 Learn how to achieve perfect scores for website security, performance and SEO using AWS S3 and CloudFront, plus some of the gotchas. This article shows real-world examples achieving A+ SSL Labs, 100% PageSpeed and 120/100 Mozilla Observatory scores. I hope you find it useful.
 
-**Last Updated:** 1st January 2026
+**Last Updated:** 19th March 2026
 **Author:** Chris Binnie, cybersecurity consultant, author & writer
 
 ---
@@ -533,7 +533,7 @@ Despite it being a single-page website, it boasts enterprise-level SEO, performa
 +-----------------------------------+
 |  Mozilla HTTP Observatory         |
 |                                   |
-|         A+  120/100               |
+|         A+  125/100               |
 |                                   |
 |    Tests Passed: 10 / 10          |
 +-----------------------------------+
