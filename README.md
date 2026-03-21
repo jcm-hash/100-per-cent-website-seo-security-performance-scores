@@ -844,9 +844,9 @@ Track these metrics monthly:
 - [WebPageTest](https://www.webpagetest.org/)
 
 **Books by Chris Binnie:**
-- *Cloud Native Security* (Wiley, 2023) - Container security and Kubernetes hardening
+- *Cloud Native Security* (Wiley, 2021) - Container security and Kubernetes hardening
 - *Linux Server Security: Hack and Defend* (Wiley, 2016) - Comprehensive Linux hardening
-- *Practical Linux Topics* (Apress, 2016) - Essential Linux administration and security
+- *Practical Linux Topics* (Apress, 2015) - Essential Linux administration and security
 
 **Community Resources:**
 - [OWASP Secure Headers Project](https://owasp.org/www-project-secure-headers/)
