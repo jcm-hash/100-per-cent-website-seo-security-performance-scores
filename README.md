@@ -2,7 +2,7 @@
 
 Learn how to achieve perfect scores for website security, performance and SEO using AWS S3 and CloudFront, plus some of the gotchas. This article shows real-world examples achieving A+ SSL Labs, 100% PageSpeed and 120/100 Mozilla Observatory scores. I hope you find it useful.
 
-**Last Updated:** 19th March 2026
+**Last Updated:** 21st March 2026
 **Author:** Chris Binnie, cybersecurity consultant, author & writer
 
 ---
@@ -544,7 +544,7 @@ Despite it being a single-page website, it boasts enterprise-level SEO, performa
 |    Google PageSpeed Insights      |
 |                                   |
 |  Performance:      100            |
-|  Accessibility:     96            |
+|  Accessibility:     94            |
 |  Best Practices:   100            |
 |  SEO:              100            |
 |                                   |
@@ -861,7 +861,7 @@ The real-world examples presented demonstrate that these aren't theoretical idea
 
 Whether building a personal portfolio, company website or documentation platform, these principles and implementation strategies provide a roadmap to excellence. Start with the foundation, implement security comprehensively, optimise performance relentlessly and maintain your infrastructure diligently. The result will be a website that excels in every measurable metric whilst requiring minimal ongoing attention and delivering enterprise-level performance.
 
-2026 update: PageSpeed now reports 94% for accessibility, not 96%.
+2026 update: PageSpeed now reports 94% for accessibility, not 96%. Mozilla Observatory now ranks the sites 125/100!
 
 ---
 
