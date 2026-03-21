@@ -1,6 +1,6 @@
 # Grade A+ Website Security, SEO & Performance By Chris Binnie
 
-Learn how to achieve perfect scores for website security, performance and SEO using AWS S3 and CloudFront, plus some of the gotchas. This article shows real-world examples achieving A+ SSL Labs, 100% PageSpeed and 120/100 Mozilla Observatory scores. I hope you find it useful.
+Learn how to achieve perfect scores for website security, performance and SEO using AWS S3 and CloudFront, plus some of the gotchas. This article shows real-world examples achieving A+ SSL Labs, 100% PageSpeed and 125/100 Mozilla Observatory scores. I hope you find it useful.
 
 **Last Updated:** 21st March 2026
 **Author:** Chris Binnie, cybersecurity consultant, author & writer
