@@ -2,7 +2,7 @@
 
 Learn how to achieve perfect scores for website security, performance and SEO using AWS S3 and CloudFront, plus some of the gotchas. This article shows real-world examples achieving A+ SSL Labs, 100% PageSpeed and 125/100 Mozilla Observatory scores. I hope you find it useful.
 
-**Last Updated:** 21st March 2026
+**Last Updated:** 6th July 2026
 **Author:** Chris Binnie, cybersecurity consultant, author & writer
 
 ---
@@ -18,6 +18,8 @@ Achieving enterprise-level website security, performance and SEO scores is not o
 - **Security Headers:** All 11 critical headers properly configured
 
 **⚠️ Important:** The code examples and configurations in this guide are only for reference. Improper configuration of security headers, CloudFront Functions or AWS services can cause downtime or introduce security vulnerabilities. Use the information in this article at your own risk; you have been suitably warned!
+
+Update! If you are interested in learning for free about AI Security, Linux & Kubernetes try my new sites, follow the footer links on: [getjailbroken](https://www.getjailbroken.com).
 
 ---
 
