@@ -183,6 +183,9 @@ Create minimal, semantic HTML:
     <!-- Favicon -->
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+    <!-- defer: found early by the preload scanner, runs after parsing -->
+    <script src="/script.js" defer></script>
 </head>
 <body>
     <header>
@@ -192,16 +195,13 @@ Create minimal, semantic HTML:
     <main>
         <!-- Content here -->
     </main>
-    
-    <!-- Defer JavaScript -->
-    <script src="/script.js" defer></script>
 </body>
 </html>
 ```
 
 **Key optimisations:**
 - Keep CSS small and on your own origin; over HTTP/2 one extra same-origin request is cheap
-- Use `defer` on scripts so they never block parsing
+- Put scripts in the `<head>` with `defer`: they download early and still run after the page is parsed (better than the old "scripts at the bottom" rule)
 - Use system fonts (no third-party font origin to connect to, and nothing for `font-src 'self'` to block)
 - Use semantic HTML5 elements
 - Implement proper viewport configuration
@@ -236,10 +236,14 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-/* Hardware-accelerated animations */
+/* Opacity animates on the compositor; no will-change needed */
 .fade-in {
     animation: fadeIn 0.3s ease-in;
-    will-change: opacity;
+}
+
+/* Respect users who have asked for less motion */
+@media (prefers-reduced-motion: reduce) {
+    .fade-in { animation: none; }
 }
 
 @keyframes fadeIn {
@@ -249,11 +253,12 @@ body {
 ```
 
 **Performance principles:**
-- Minimise CSS specificity for faster parsing, watch out for bloating!
+- Keep specificity low so rules are easy to override (selector speed stopped mattering years ago); watch out for bloating!
 - Use CSS custom properties for maintainability
 - Implement mobile-first responsive design
 - Leverage modern layout techniques (Grid, Flexbox)
-- Add `will-change` for animated elements
+- Avoid a permanent `will-change`: it costs memory, and opacity/transform animations are already composited. If used at all, add it just before an animation and remove it after
+- Honour `prefers-reduced-motion`
 
 ### JavaScript Optimisation
 
@@ -310,7 +315,7 @@ if (document.readyState === 'loading') {
 **JavaScript best practices:**
 - Use `requestAnimationFrame` for smooth animations
 - Implement passive event listeners for better scroll performance
-- Leverage Intersection Observer for lazy loading
+- Use native `loading="lazy"` on images; an Intersection Observer with `data-src` is only needed for other lazy work, and hides images from browsers without JavaScript
 - Avoid framework overhead with vanilla JavaScript
 - Minimise DOM manipulation and reflows
 
@@ -368,6 +373,10 @@ CloudFront automatically compresses:
 
 Compression reduces file sizes by 70-90% for text-based resources. It's a real eye-opener if you do some Brotli and gzip compression tests. In my experience it makes a big difference to the browsing UX.
 
+The `update-distribution` call above is simplified for illustration; the real command needs the *complete* distribution config plus its ETag, so fetch it with `aws cloudfront get-distribution-config`, set `"Compress": true` in the file, then pass it back with `--distribution-config file://config.json --if-match <ETag>`. (Or tick "Compress objects automatically" in the console.)
+
+CDNs compress on the fly at a moderate level to save CPU. Measured in September 2026, the chrisbinnie.com home page (23,932 bytes) arrives as 5,649 bytes of Brotli, which matches Brotli quality 5 locally; maximum quality (11) would give 4,835. Both are far inside the ~14 KB that fits in the first round trip, so for a page this size there is nothing to gain. On a larger page it can be worth uploading pre-compressed files.
+
 ---
 
 ## SEO Excellence: Technical Foundations {#seo-excellence}
@@ -422,9 +431,7 @@ Implement comprehensive meta tags:
 ```html
 <!-- Primary Meta Tags -->
 <title>Linux Server Security: Complete Hardening Guide | Chris Binnie</title>
-<meta name="title" content="Linux Server Security: Complete Hardening Guide">
 <meta name="description" content="Expert Linux server security guidance covering Ubuntu, CentOS, Debian hardening, intrusion detection and defence strategies.">
-<meta name="keywords" content="linux security, server hardening, ubuntu security, centos security">
 <meta name="author" content="Chris Binnie">
 <link rel="canonical" href="https://www.chrisbinnie.com/linux-server-security">
 
@@ -443,6 +450,8 @@ Implement comprehensive meta tags:
 <meta property="twitter:description" content="Expert Linux server security guidance covering Ubuntu, CentOS, Debian hardening, intrusion detection and defence strategies.">
 <meta property="twitter:image" content="https://www.chrisbinnie.com/images/twitter-image.jpg">
 ```
+
+Two tags often seen in older guides are left out on purpose: `<meta name="keywords">` has been ignored by Google since 2009, and `<meta name="title">` is not a standard tag (the `<title>` element does that job).
 
 ### XML Sitemap
 
@@ -465,6 +474,8 @@ Generate and submit an XML sitemap:
     </url>
 </urlset>
 ```
+
+Google ignores `<changefreq>` and `<priority>`; an accurate `<lastmod>` is the part that is used, so only change it when the page really changes.
 
 Submit to search engines:
 - Google Search Console: https://search.google.com/search-console
@@ -619,7 +630,12 @@ echo "Running security audit for $DOMAIN on $DATE"
 
 # Check SSL Labs grade
 echo "Checking SSL configuration..."
-curl -s "https://api.ssllabs.com/api/v3/analyze?host=$DOMAIN" > "$REPORT_DIR/ssllabs-$DATE.json"
+# The first call starts a scan and returns "IN_PROGRESS"; poll until READY
+curl -s "https://api.ssllabs.com/api/v3/analyze?host=$DOMAIN&startNew=on" > /dev/null
+until curl -s "https://api.ssllabs.com/api/v3/analyze?host=$DOMAIN&all=done" \
+      | tee "$REPORT_DIR/ssllabs-$DATE.json" | grep -qE '"status":"(READY|ERROR)"'; do
+  sleep 30
+done
 
 # Check security headers
 echo "Checking security headers..."
@@ -648,8 +664,9 @@ DOMAIN="www.chrisbinnie.com"
 LIGHTHOUSE_API_KEY="your-api-key"
 
 # Run Lighthouse audit
-curl -X POST \
-  "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://$DOMAIN&strategy=mobile&key=$LIGHTHOUSE_API_KEY" \
+# The API takes GET, not POST; list each category or only Performance is returned
+curl -s \
+  "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://$DOMAIN&strategy=mobile&category=performance&category=accessibility&category=seo&category=best-practices&key=$LIGHTHOUSE_API_KEY" \
   -o lighthouse-report.json
 
 # Parse results
@@ -704,7 +721,9 @@ DISTRIBUTION_ID="YOUR-DISTRIBUTION-ID"
 
 echo "Starting deployment..."
 
-# Sync files to S3 with appropriate cache headers
+# Sync files to S3 with appropriate cache headers.
+# "immutable" is only safe if a file's NAME changes whenever its content does
+# (e.g. styles.3f9a1c.css). See the note below.
 aws s3 sync ./public/ $BUCKET \
   --delete \
   --cache-control "public, max-age=31536000, immutable" \
@@ -728,6 +747,8 @@ aws cloudfront create-invalidation \
 
 echo "Deployment complete!"
 ```
+
+**A gotcha with `immutable`:** it tells browsers never to re-check a file for a year. A CloudFront invalidation clears the edge, but not the copies already in visitors' browsers. So if `styles.css` keeps the same name and you change it, returning visitors keep the old version for up to a year. Either put a content hash in the filename (and update the HTML reference in the build), or drop `immutable` and use a shorter `max-age` for files whose names don't change.
 
 ---
 

@@ -1,0 +1,46 @@
+{% comment %}
+  Copy of the Primer theme layout (pages-themes/primer) with these changes:
+  1. No site-title <h1> above the article, which already has its own.
+  2. <main> and <footer> landmarks, for screen-reader navigation.
+  3. anchor-js (heading link icons) is loaded from cdnjs only after the page
+     has finished loading. It was a blocking script: if cdnjs was slow or hung,
+     DOMContentLoaded and the load event waited for it.
+  4. Code blocks that scroll sideways get tabindex="0" so keyboard users can
+     scroll them.
+  5. The X-UA-Compatible tag (for old Internet Explorer) is dropped.
+  This comment is Liquid, so none of it is sent to visitors.
+{% endcomment %}<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en-US" }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% seo %}
+    <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
+    {% include head-custom.html %}
+  </head>
+  <body>
+    <main class="container-lg px-3 my-5 markdown-body">
+      {{ content }}
+
+      {% if site.github.private != true and site.github.license %}
+      <footer class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. {% github_edit_link "Improve this page" %}.
+      </footer>
+      {% endif %}
+    </main>
+    <script>
+      document.querySelectorAll('pre').forEach(function (pre) {
+        if (pre.scrollWidth > pre.clientWidth) pre.tabIndex = 0;
+      });
+      window.addEventListener('load', function () {
+        var s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js';
+        s.integrity = 'sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=';
+        s.crossOrigin = 'anonymous';
+        s.onload = function () { anchors.add(); };
+        document.body.appendChild(s);
+      });
+    </script>
+  </body>
+</html>

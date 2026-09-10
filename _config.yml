@@ -1,8 +1,10 @@
-# Gives the page a readable site name (instead of the repo slug) and
-# a meta description, which jekyll-seo-tag outputs as <meta name="description">.
-title: Chris Binnie
+# Readable site name for the browser tab, search results and social cards
+# (instead of the repo slug).
+title: Chris Binnie Security Guides
+# Output by jekyll-seo-tag as <meta name="description"> and og:description.
 description: >-
   How to get A+ SSL Labs, 100% PageSpeed and 125/100 Mozilla Observatory scores
   with a static site on AWS S3 and CloudFront, for about $1-$2 a month.
 author: Chris Binnie
 lang: en-GB
+theme: jekyll-theme-primer

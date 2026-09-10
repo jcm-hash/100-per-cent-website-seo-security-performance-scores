@@ -1,0 +1,37 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+/* Links in body text are blue on near-black text (2.7:1), so colour alone
+   does not mark them (WCAG 1.4.1). Underline them. */
+.markdown-body p a, .markdown-body li a, .markdown-body footer a { text-decoration: underline; }
+
+/* Visible focus ring for code blocks made keyboard-scrollable in the layout */
+.markdown-body pre:focus-visible { outline: 2px solid #0366d6; outline-offset: 2px; }
+
+/* Darken Rouge syntax colours that fall below 4.5:1 on the #f6f8fa code background */
+.highlight .cm,
+.highlight .c1,
+.highlight .c,.highlight .cd { color: #707060; }
+.highlight .cp,
+.highlight .cs,
+.highlight .gh,
+.highlight .bp { color: #707070; }
+.highlight .go { color: #6e6e6e; }
+.highlight .gu { color: #6f6f6f; }
+.highlight .mf,
+.highlight .mh,
+.highlight .il,
+.highlight .mi,
+.highlight .mo,
+.highlight .m,.highlight .mb,.highlight .mx { color: #007a7a; }
+.highlight .sr { color: #007f20; }
+.highlight .na,
+.highlight .no,
+.highlight .vc,
+.highlight .vg,
+.highlight .vi,
+.highlight .nv { color: #007b7b; }
+.highlight .nb { color: #00779f; }
+.highlight .w { color: #6e6e6e; }
