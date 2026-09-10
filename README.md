@@ -2,7 +2,7 @@
 
 Learn how to achieve perfect scores for website security, performance and SEO using AWS S3 and CloudFront, plus some of the gotchas. This article shows real-world examples achieving A+ SSL Labs, 100% PageSpeed and 125/100 Mozilla Observatory scores. I hope you find it useful.
 
-**Last Updated:** 6th July 2026
+**Last Updated:** 6th July 2026<br>
 **Author:** Chris Binnie, cybersecurity consultant, author & writer
 
 ---
@@ -12,10 +12,10 @@ Learn how to achieve perfect scores for website security, performance and SEO us
 Achieving enterprise-level website security, performance and SEO scores is not only possible but somewhat surprisingly it's really cost-effective. The information in this guide was hard-won and demonstrates how to build websites that achieve:
 
 - **SSL Labs Grade:** A+
-- **Mozilla HTTP Observatory:** 120/100 (perfect score)
+- **Mozilla HTTP Observatory:** 125/100 (the scale awards bonus points above 100)
 - **Google PageSpeed:** 100/100 (both mobile and desktop)
-- **Google Lighthouse:** 100% across all metrics
-- **Security Headers:** All 11 critical headers properly configured
+- **Google Lighthouse:** 100 for Performance, Best Practices and SEO; 94 for Accessibility (see the 2026 update at the end)
+- **Security Headers:** Nine security headers configured (listed in the case study below)
 
 **⚠️ Important:** The code examples and configurations in this guide are only for reference. Improper configuration of security headers, CloudFront Functions or AWS services can cause downtime or introduce security vulnerabilities. Use the information in this article at your own risk; you have been suitably warned!
 
@@ -32,7 +32,7 @@ This page focuses on two real-world examples ([chrisbinnie.com](https://www.chri
 1. [Creating The Perfect Website: Security, Performance & SEO](#the-perfect-website-trinity)
 2. [Architecture Foundation: Why Static Sites Win](#architecture-foundation)
 3. [AWS Infrastructure Setup: S3 and CloudFront](#aws-infrastructure-setup)
-4. [Security Implementation: Achieving A+ Ratings](#security-implementation)
+4. [Security Headers: The Real-World Configuration](#security-headers)
 5. [Performance Optimisation: 100% PageSpeed Scores](#performance-optimisation)
 6. [SEO Excellence: Technical Foundations](#seo-excellence)
 7. [Real-World Case Studies](#real-world-case-studies)
@@ -177,18 +177,8 @@ Create minimal, semantic HTML:
     <meta name="description" content="Expert cybersecurity guidance and Linux server security resources">
     <title>Linux Server Security | Chris Binnie</title>
     
-    <!-- Preconnect to improve performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    
-    <!-- Critical CSS inline -->
-    <style>
-        /* Critical above-the-fold styles */
-        body { margin: 0; font-family: system-ui, sans-serif; }
-        header { background: #1a1a1a; color: #fff; padding: 1rem; }
-    </style>
-    
-    <!-- Defer non-critical CSS -->
-    <link rel="stylesheet" href="/styles.css" media="print" onload="this.media='all'">
+    <!-- One small same-origin stylesheet: allowed by style-src 'self' -->
+    <link rel="stylesheet" href="/styles.css">
     
     <!-- Favicon -->
     <link rel="icon" href="/favicon.ico" sizes="any">
@@ -210,12 +200,14 @@ Create minimal, semantic HTML:
 ```
 
 **Key optimisations:**
-- Inline critical CSS to eliminate render-blocking resources
-- Defer non-critical CSS loading
-- Place JavaScript at end with `defer` attribute
+- Keep CSS small and on your own origin; over HTTP/2 one extra same-origin request is cheap
+- Use `defer` on scripts so they never block parsing
+- Use system fonts (no third-party font origin to connect to, and nothing for `font-src 'self'` to block)
 - Use semantic HTML5 elements
 - Implement proper viewport configuration
 - Add preconnect hints for external resources
+
+**Watch out:** the popular "inline critical CSS, then load the rest with `media="print" onload="this.media='all'"`" pattern does not work under the Content-Security-Policy shown in the case study below. `style-src 'self'` blocks the inline `<style>` block and `script-src 'self'` blocks the inline `onload` handler, so the stylesheet never applies. If you want inline CSS, add its SHA-256 hash to `style-src`.
 
 ### CSS Optimisation
 
@@ -340,15 +332,14 @@ Implement modern image formats and techniques (this route wasn't used, choosing 
         alt="Linux server security" 
         width="1200" 
         height="630"
-        loading="lazy"
-        decoding="async">
+        fetchpriority="high">
 </picture>
 ```
 
 **Image guidelines:**
-- Convert images to WebP or AVIF formats (70-80% smaller than JPEG)
+- Convert images to WebP or AVIF formats (often much smaller than JPEG at similar quality; check each image, as savings vary)
 - Specify explicit width and height to prevent layout shift
-- Use `loading="lazy"` for below-the-fold images
+- Use `loading="lazy"` only for below-the-fold images; never lazy-load the hero (it delays Largest Contentful Paint), give it `fetchpriority="high"` instead
 - Implement responsive images with `srcset`
 - Compress images to appropriate quality levels
 
@@ -554,7 +545,7 @@ Despite it being a single-page website, it boasts enterprise-level SEO, performa
 +-----------------------------------+
 ```
 
-**Security Headers Implemented:**
+### Security Headers Implemented {#security-headers}
 
 ```bash
 $ curl -I https://www.chrisbinnie.com
@@ -581,6 +572,8 @@ cross-origin-resource-policy: same-origin
 cache-control: public, max-age=60, must-revalidate
 x-cache: Hit from cloudfront
 ```
+
+Two of these are worth revisiting. `X-XSS-Protection` is deprecated; modern browsers have removed the XSS auditor, and MDN recommends sending `X-XSS-Protection: 0` or omitting it, relying on the CSP instead. `interest-cohort` in `Permissions-Policy` was Google's FLoC, which was abandoned; Chrome logs an "unrecognized feature" warning for it, so it can be dropped.
 
 **(Very) Rough Estimated Monthly Costs:**
 

@@ -1,0 +1,8 @@
+# Gives the page a readable site name (instead of the repo slug) and
+# a meta description, which jekyll-seo-tag outputs as <meta name="description">.
+title: Chris Binnie
+description: >-
+  How to get A+ SSL Labs, 100% PageSpeed and 125/100 Mozilla Observatory scores
+  with a static site on AWS S3 and CloudFront, for about $1-$2 a month.
+author: Chris Binnie
+lang: en-GB
