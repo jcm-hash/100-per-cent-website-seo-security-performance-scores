@@ -9,7 +9,7 @@ Learn how to achieve perfect scores for website security, performance and SEO us
 
 ## Introduction
 
-Achieving enterprise-level website security, performance and SEO scores is not only possible but somewhat surprisingly it's really cost-effective. The information in this guide was hard-won and demonstrates how to build websites that achieve:
+Achieving enterprise-level website security, performance and SEO scores is not only possible but, somewhat surprisingly, really cost-effective. The information in this guide was hard-won and demonstrates how to build websites that achieve:
 
 - **SSL Labs Grade:** A+
 - **Mozilla HTTP Observatory:** 125/100 (the scale awards bonus points above 100)
@@ -19,18 +19,18 @@ Achieving enterprise-level website security, performance and SEO scores is not o
 
 **⚠️ Important:** The code examples and configurations in this guide are only for reference. Improper configuration of security headers, CloudFront Functions or AWS services can cause downtime or introduce security vulnerabilities. Use the information in this article at your own risk; you have been suitably warned!
 
-Update! If you are interested in learning for free about AI Security, Linux & Kubernetes try my new sites, follow the footer links on: [getjailbroken](https://www.getjailbroken.com).
+Update! If you'd like to learn about AI security, Linux and Kubernetes for free, try my new sites: follow the footer links on [getjailbroken](https://www.getjailbroken.com).
 
 ---
 
-This page focuses on two real-world examples ([chrisbinnie.com](https://www.chrisbinnie.com) and [chrisbinnie.co.uk](https://www.chrisbinnie.co.uk)) and following some unwelcome eyestrain shares the architecture, configuration and implementation strategies that deliver enterprise-level results whilst maintaining costs of only around $1-$2 monthly (excluding annual Domain Name fees).
+This page focuses on two real-world examples ([chrisbinnie.com](https://www.chrisbinnie.com) and [chrisbinnie.co.uk](https://www.chrisbinnie.co.uk)) and, after some unwelcome eyestrain, shares the architecture, configuration and implementation strategies behind them. They deliver enterprise-level results for only around $1-$2 a month (excluding annual domain name fees).
 
 ---
 
 ## Table of Contents
 
 1. [Creating The Perfect Website: Security, Performance & SEO](#the-perfect-website-trinity)
-2. [Architecture Foundation: Why Static Sites Win](#architecture-foundation)
+2. [Architecture: Why Static Sites Win](#architecture-foundation)
 3. [AWS Infrastructure Setup: S3 and CloudFront](#aws-infrastructure-setup)
 4. [Security Headers: The Real-World Configuration](#security-headers)
 5. [Performance Optimisation: 100% PageSpeed Scores](#performance-optimisation)
@@ -43,7 +43,7 @@ This page focuses on two real-world examples ([chrisbinnie.com](https://www.chri
 
 ## Creating The Perfect Website: Security, Performance & SEO {#the-perfect-website-trinity}
 
-Modern websites face a challenging paradox: it's really tricky to get it right. Users demand instant loading times and seamless experiences, whilst security threats grow increasingly sophisticated. Search engines prioritise both security and performance in their ranking algorithms, making these three pillars—security, performance and SEO—fundamentally interconnected.
+Modern websites face a real challenge: getting all of this right at once is tricky. Users expect pages to load instantly and work smoothly, whilst security threats grow ever more sophisticated. Search engines weigh both security and performance when ranking pages, so the three pillars—security, performance and SEO—are closely linked.
 
 ### Why Traditional Approaches Fail
 
@@ -61,16 +61,16 @@ The solution lies in architectural simplicity: **static sites with modern securi
 
 **Security** encompasses protecting your website and users from threats including cross-site scripting (XSS), clickjacking, man-in-the-middle attacks and data breaches. Perfect security requires properly configured TLS/SSL, comprehensive HTTP security headers and minimal attack surface.
 
-**Performance** measures how quickly your website loads and becomes interactive. Core Web Vitals—Largest Contentful Paint (LCP), First Input Delay (FID) and Cumulative Layout Shift (CLS)—directly impact user experience and search rankings.
+**Performance** measures how quickly your website loads and becomes interactive. Core Web Vitals—Largest Contentful Paint (LCP), Interaction to Next Paint (INP) and Cumulative Layout Shift (CLS)—directly affect user experience and search rankings. (INP replaced First Input Delay in March 2024.)
 
 **SEO** (Search Engine Optimisation) determines your website's visibility in search results. Technical SEO requires fast loading times, mobile optimisation, proper schema markup and secure connections—all factors that overlap with security and performance.
 
 
 ---
 
-## Architecture: And Why Static Sites Win {#architecture-foundation}
+## Architecture: Why Static Sites Win {#architecture-foundation}
 
-Static websites represent the optimal architecture for achieving perfect security, performance and SEO scores. Unlike dynamic sites requiring server-side processing, databases and complex application logic, static sites serve pre-rendered HTML, CSS and JavaScript files directly to users. The factors influencing the design were firstly to avoid absolutely all library dependencies (to stop the ever-growing number of supply chain attacks) and secondly show some simple functionality, but keep any javascript or CSS as secure and clean as possible. It was frustrating at times but after the initial headaches the sites work well in most browsers and on both mobiles and desktops.
+Static websites represent the optimal architecture for achieving perfect security, performance and SEO scores. Unlike dynamic sites requiring server-side processing, databases and complex application logic, static sites serve pre-rendered HTML, CSS and JavaScript files directly to users. Two goals shaped the design. First, avoid absolutely all library dependencies, to stay clear of the ever-growing number of supply chain attacks. Second, still offer some simple functionality while keeping the JavaScript and CSS as secure and clean as possible. It was frustrating at times, but after the initial headaches the sites work well in most browsers, on both mobile and desktop.
 
 ### The Static Site Advantage
 
@@ -83,7 +83,7 @@ Static websites represent the optimal architecture for achieving perfect securit
 **Performance Benefits:**
 - **Instant serving:** No database queries or server-side rendering
 - **Efficient caching:** Static files cache perfectly at CDN edge locations
-- **Minimal payload:** Typically 20-50KB total vs 2-3MB for typical CMS sites
+- **Minimal payload:** Often 20-50 KB in total, against 2-3 MB for many CMS sites
 - **Fast TTFB:** Time To First Byte under 20ms with proper CDN configuration achieves enterprise-level performance
 
 **SEO Benefits:**
@@ -327,7 +327,7 @@ if (document.readyState === 'loading') {
 
 ### Image Optimisation
 
-Implement modern image formats and techniques (this route wasn't used, choosing heavily optimised JPGs instead):
+Implement modern image formats and techniques (the example sites don't use this; they use heavily optimised JPEGs instead):
 
 ```html
 <!-- Responsive images with modern formats -->
@@ -387,7 +387,7 @@ CDNs compress on the fly at a moderate level to save CPU. Measured in September 
 
 ## SEO Excellence: Technical Foundations {#seo-excellence}
 
-Perfect SEO requires both a technical implementation and content strategy. This section focuses on both technical SEO foundations.
+Perfect SEO needs both technical implementation and a content strategy. This section covers the technical foundations.
 
 ### Schema.org Structured Data
 
@@ -505,7 +505,7 @@ Disallow: /admin/
 
 ## Real-World Case Studies {#real-world-case-studies}
 
-Despite it being a single-page website, it boasts enterprise-level SEO, performance and security:
+Although chrisbinnie.com is a single-page website, it achieves enterprise-level SEO, performance and security:
 
 ### Case Study: chrisbinnie.com
 
@@ -582,7 +582,7 @@ With moderate traffic (50K requests): $1-$2 a month.
 
 **Additional Site:** The chrisbinnie.co.uk domain achieves identical security and performance scores using the same architecture and security header configuration.
 
-**Key Insight:** Perfect scores across all testing platforms achieved with minimal infrastructure cost and zero dependencies. Total page weight of 22.8 KB enables instant loading globally via CloudFront edge caching.
+**Key Insight:** The site gets top scores on every testing platform with minimal infrastructure cost and zero dependencies. At 22.8 KB, the page loads almost instantly worldwide from CloudFront's edge caches.
 
 ---
 
@@ -632,7 +632,7 @@ echo "Security audit complete. Reports saved to $REPORT_DIR"
 
 ### Performance Monitoring
 
-Set up continuous performance monitoring using this simple script, alter it in any way that helps. Even just logging the history of scores periodically can help make historical comparisons if something breaks.
+Set up continuous performance monitoring with this simple script, and adapt it however suits you. Even just logging scores regularly gives you a history to compare against if something breaks.
 
 ```bash
 #!/bin/bash
@@ -732,7 +732,7 @@ echo "Deployment complete!"
 
 ## Conclusion and Next Steps {#conclusion}
 
-In my experience achieving perfect website security, performance and SEO scores is entirely achievable through architectural simplicity, comprehensive security headers and modern hosting infrastructure. The examples of chrisbinnie.com and chrisbinnie.co.uk demonstrate that professional results don't require complex solutions or significant investment.
+In my experience, perfect website security, performance and SEO scores are entirely achievable through architectural simplicity, comprehensive security headers and modern hosting infrastructure. The examples of chrisbinnie.com and chrisbinnie.co.uk demonstrate that professional results don't require complex solutions or significant investment.
 
 ### Things To Think About
 
@@ -803,7 +803,7 @@ Track these metrics monthly:
 
 **Security Metrics:**
 - SSL Labs grade (target: A+)
-- Mozilla Observatory score (target: 120/100)
+- Mozilla Observatory score (target: 120/100 or higher)
 - SecurityHeaders.com grade (target: A+)
 - Zero security incidents
 - No mixed content warnings
@@ -851,11 +851,11 @@ Track these metrics monthly:
 
 The journey to perfect website security, performance and SEO scores begins with architectural decisions. By choosing static site hosting on AWS S3 and CloudFront, implementing comprehensive security headers through CloudFront Functions and optimising every aspect of content delivery, you can achieve enterprise-level professional results—for monthly costs of $1-$2.
 
-The real-world examples presented demonstrate that these aren't theoretical ideals but practical, proven architectures delivering exceptional results in production environments. With total monthly costs under $2, zero dependencies to maintain and perfect scores across all testing platforms, this approach represents the optimal balance of security, performance, cost and maintenance overhead.
+The real-world examples presented demonstrate that these aren't theoretical ideals but practical, proven architectures delivering exceptional results in production environments. With total monthly costs under $2, zero dependencies to maintain and top scores across all testing platforms, this approach represents the optimal balance of security, performance, cost and maintenance overhead.
 
 Whether building a personal portfolio, company website or documentation platform, these principles and implementation strategies provide a roadmap to excellence. Start with the foundation, implement security comprehensively, optimise performance relentlessly and maintain your infrastructure diligently. The result will be a website that excels in every measurable metric whilst requiring minimal ongoing attention and delivering enterprise-level performance.
 
-2026 update: PageSpeed now reports 94% for accessibility, not 96%. Mozilla Observatory now ranks the sites 125/100!
+**2026 update:** PageSpeed now scores accessibility at 94, down from 96, and Mozilla Observatory now scores the sites 125/100!
 
 ---
 
