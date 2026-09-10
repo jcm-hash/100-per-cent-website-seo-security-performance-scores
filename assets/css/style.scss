@@ -2,6 +2,8 @@
 ---
 
 @import "{{ site.theme }}";
+/* Optional larger, easier-to-read text */
+@import "reading-comfort";
 
 /* Links in body text are blue on near-black text (2.7:1), so colour alone
    does not mark them (WCAG 1.4.1). Underline them. */

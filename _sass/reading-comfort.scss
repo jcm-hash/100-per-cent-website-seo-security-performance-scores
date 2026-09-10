@@ -1,0 +1,45 @@
+// Optional: easier reading for low-vision readers, following the web
+// mapping in UKAAF G003 (clear print): larger text sized in rem, 1.5+ line
+// spacing, shorter lines, left-aligned, nothing smaller than body text.
+
+// rem, not px: the theme sets 16px, which ignores a reader who has chosen a
+// bigger default text size in their browser. rem follows that setting.
+.markdown-body {
+  font-size: 1.125rem;            // 18px at the default setting (about 14pt)
+  line-height: 1.6;
+  text-align: left;
+}
+
+// Shorter lines for prose (about 70 characters). Code blocks and tables keep
+// the full width so code wraps less.
+.markdown-body > p,
+.markdown-body > ul,
+.markdown-body > ol,
+.markdown-body > blockquote,
+.markdown-body > h1,
+.markdown-body > h2,
+.markdown-body > h3,
+.markdown-body > h4 {
+  max-width: 40rem;
+}
+
+// Code was 85% of body size; keep it close to body size
+.markdown-body code,
+.markdown-body pre,
+.markdown-body pre code { font-size: 0.9375em; }
+.markdown-body pre code { font-size: 1em; }
+
+// Footer text was smaller than body text
+.footer { font-size: 1rem; }
+
+// Underlines that clear the letters' descenders (g, p, y)
+.markdown-body a { text-underline-offset: 0.2em; }
+
+// Readers who ask their system for more contrast get pure black on white.
+// Light scheme only: the optional dark-mode file has its own version.
+@media (prefers-contrast: more) and (prefers-color-scheme: light) {
+  html body { color: #000; }
+  html body .markdown-body a { color: #0040a0; text-decoration-thickness: 2px; }
+  html body .markdown-body blockquote,
+  html body .text-gray { color: #000 !important; }
+}
