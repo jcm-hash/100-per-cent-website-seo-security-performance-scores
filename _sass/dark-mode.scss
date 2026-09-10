@@ -1,0 +1,95 @@
+// Optional: dark mode that follows the reader's device setting.
+// No button and no JavaScript: the browser applies it when the reader's
+// system is set to dark. Every text colour below is at least 4.5:1 on its
+// background (WCAG 1.4.3).
+@media (prefers-color-scheme: dark) {
+  :root { color-scheme: dark; }
+  body { color: #e6edf3; background-color: #0d1117; }
+  a { color: #58a6ff; }
+  .markdown-body h1, .markdown-body h2 { border-bottom-color: #30363d; }
+  .markdown-body hr { background-color: #30363d; }
+  .markdown-body blockquote, .markdown-body h6, .text-gray { color: #8b949e !important; }
+  .markdown-body blockquote { border-left-color: #30363d; }
+  .border-gray-light { border-color: #30363d !important; }
+  .markdown-body table th, .markdown-body table td { border-color: #30363d; }
+  .markdown-body table tr { background-color: #0d1117; border-top-color: #30363d; }
+  .markdown-body table tr:nth-child(2n) { background-color: #161b22; }
+  .markdown-body code, .markdown-body tt { background-color: rgba(110, 118, 129, 0.4); }
+  .markdown-body pre, .markdown-body .highlight pre, .highlight { background-color: #161b22; }
+  .markdown-body h1 .octicon-link, .markdown-body h2 .octicon-link,
+  .markdown-body h3 .octicon-link, .anchorjs-link { color: #e6edf3; }
+  .markdown-body pre:focus-visible { outline-color: #58a6ff; }
+
+  // Syntax colours lifted to at least 4.6:1 on #161b22
+    .highlight .c,
+    .highlight .c1,
+    .highlight .cd,
+    .highlight .cm { color: #909090; }
+    .highlight .bp,
+    .highlight .cp,
+    .highlight .cs,
+    .highlight .gh { color: #999999; }
+    .highlight .err { color: #ffa198; background-color: transparent; }
+    .highlight .gd { color: #ffdcd7; background-color: #3c1618; }
+    .highlight .ge,
+    .highlight .k,
+    .highlight .kc,
+    .highlight .kd,
+    .highlight .kn,
+    .highlight .kp,
+    .highlight .kr,
+    .highlight .kv,
+    .highlight .o,
+    .highlight .ow { color: #e6edf3; }
+    .highlight .gr,
+    .highlight .gt,
+    .highlight .ne,
+    .highlight .nf,
+    .highlight .nl { color: #ff2929; }
+    .highlight .gi { color: #aff5b4; background-color: #12361f; }
+    .highlight .go,
+    .highlight .gp,
+    .highlight .nn { color: #8c8c8c; }
+    .highlight .gu { color: #aaaaaa; }
+    .highlight .kt,
+    .highlight .nc { color: #7485b9; }
+    .highlight .il,
+    .highlight .m,
+    .highlight .mb,
+    .highlight .mf,
+    .highlight .mh,
+    .highlight .mi,
+    .highlight .mo,
+    .highlight .mx,
+    .highlight .na,
+    .highlight .no,
+    .highlight .nv,
+    .highlight .vc,
+    .highlight .vg,
+    .highlight .vi { color: #1affff; }
+    .highlight .s,
+    .highlight .s1,
+    .highlight .s2,
+    .highlight .sb,
+    .highlight .sc,
+    .highlight .sd,
+    .highlight .se,
+    .highlight .sh,
+    .highlight .si,
+    .highlight .sx { color: #f0426d; }
+    .highlight .sr { color: #1aff53; }
+    .highlight .ss { color: #ff1ac6; }
+    .highlight .nb { color: #1ac5ff; }
+    .highlight .nd { color: #74a5a5; }
+    .highlight .ni { color: #ff1aff; }
+    .highlight .nt { color: #7575ff; }
+    .highlight .w { color: #bbbbbb; }
+
+  // Readers who also ask for more contrast: pure white text
+  @media (prefers-contrast: more) {
+    html body { color: #fff; }
+    html body .markdown-body a { color: #a5d6ff; text-decoration-thickness: 2px; }
+    html body .markdown-body blockquote,
+    html body .text-gray { color: #fff !important; }
+  }
+}

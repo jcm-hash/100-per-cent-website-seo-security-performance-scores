@@ -35,3 +35,6 @@
 .highlight .nv { color: #007b7b; }
 .highlight .nb { color: #00779f; }
 .highlight .w { color: #6e6e6e; }
+
+/* Optional dark mode; must come last so it overrides the light colours above */
+@import "dark-mode";
