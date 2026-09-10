@@ -241,9 +241,15 @@ body {
     animation: fadeIn 0.3s ease-in;
 }
 
-/* Respect users who have asked for less motion */
+/* Respect users who have asked for less motion. A near-zero duration is
+   safer than animation: none, which can leave anything that starts at
+   opacity: 0 invisible for exactly these users */
 @media (prefers-reduced-motion: reduce) {
-    .fade-in { animation: none; }
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 @keyframes fadeIn {
@@ -519,42 +525,16 @@ Despite it being a single-page website, it boasts enterprise-level SEO, performa
 
 **Test Results:**
 
+| Test | Result |
+|---|---|
+| SSL Labs (Qualys) rating | A+ (certificate, protocol support, key exchange and cipher strength) |
+| Mozilla HTTP Observatory | A+, 125/100, 10 of 10 tests passed |
+| PageSpeed Insights: Performance | 100 |
+| PageSpeed Insights: Accessibility | 94 |
+| PageSpeed Insights: Best Practices | 100 |
+| PageSpeed Insights: SEO | 100 |
 
-```
-+-----------------------------------+
-|   SSL Labs (Qualys) Rating        |
-|                                   |
-|            A+                     |
-|                                   |
-|  o Certificate                    |
-|  o Protocol Support               |
-|  o Key Exchange                   |
-|  o Cipher Strength                |
-+-----------------------------------+
-```
-
-```
-+-----------------------------------+
-|  Mozilla HTTP Observatory         |
-|                                   |
-|         A+  125/100               |
-|                                   |
-|    Tests Passed: 10 / 10          |
-+-----------------------------------+
-```
-
-```
-+-----------------------------------+
-|    Google PageSpeed Insights      |
-|                                   |
-|  Performance:      100            |
-|  Accessibility:     94            |
-|  Best Practices:   100            |
-|  SEO:              100            |
-|                                   |
-|  (Both Mobile & Desktop)          |
-+-----------------------------------+
-```
+PageSpeed scores are for both mobile and desktop.
 
 ### Security Headers Implemented {#security-headers}
 
@@ -588,19 +568,17 @@ Two of these are worth revisiting. `X-XSS-Protection` is deprecated; modern brow
 
 **(Very) Rough Estimated Monthly Costs:**
 
-```
-AWS Services (estimated):
-├── S3 Storage (1 GB):                $0.023
-├── S3 Requests (10,000):             $0.01
-├── CloudFront Data Transfer (5 GB):  $0.50
-├── CloudFront Requests (50,000):     $0.06
-├── CloudFront Functions:             $0.01
-└── ACM Certificate:                  $0.00 (free)
-                                      -------
-Total Monthly Cost:                   $0.60
+| AWS service (estimated) | Monthly cost |
+|---|---:|
+| S3 storage (1 GB) | $0.023 |
+| S3 requests (10,000) | $0.01 |
+| CloudFront data transfer (5 GB) | $0.50 |
+| CloudFront requests (50,000) | $0.06 |
+| CloudFront Functions | $0.01 |
+| ACM certificate | $0.00 (free) |
+| **Total** | **$0.60** |
 
-With moderate traffic (50K requests):  $1-$2/month
-```
+With moderate traffic (50K requests): $1-$2 a month.
 
 **Additional Site:** The chrisbinnie.co.uk domain achieves identical security and performance scores using the same architecture and security header configuration.
 
